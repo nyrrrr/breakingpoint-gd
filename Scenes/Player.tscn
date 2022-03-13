@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/sprites/Player-walk-0001.png" type="Texture" id=1]
 [ext_resource path="res://Assets/sprites/Player-walk-shoot-0001.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Fist.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=5]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -66,13 +67,11 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 2, 3.5 )
+extents = Vector2( 12, 18 )
 
 [node name="Player" type="Area2D"]
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_group_": true
-}
+fist_scene = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 6, 6 )
@@ -80,7 +79,12 @@ frames = SubResource( 7 )
 animation = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 0.5 )
 shape = SubResource( 8 )
+
+[node name="FistReturnPosition" type="Position2D" parent="."]
+position = Vector2( 0, 6 )
+
+[node name="FistPosition" type="Position2D" parent="."]
+position = Vector2( 33, 7 )
 
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]

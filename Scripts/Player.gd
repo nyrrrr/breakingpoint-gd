@@ -1,16 +1,16 @@
 extends Area2D
 signal hit
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export(PackedScene) var fist_scene
+
 export var speed = 400
 var screen_size
+var is_shooting = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
-	hide()
+	#hide()
 
 
 func _process(delta):
@@ -32,15 +32,30 @@ func _process(delta):
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
+	
+	if Input.is_action_pressed("shoot_right") or Input.is_action_pressed("shoot_down") or Input.is_action_pressed("shoot_left") or Input.is_action_pressed("shoot_up"):
+		is_shooting = true
+		var fist = fist_scene.instance()
+		add_child(fist)
+		fist.position = $FistPosition.position
+		
 	if velocity.x != 0:
-		$AnimatedSprite.animation = "walk"
+		if is_shooting:
+			$AnimatedSprite.animation = "walk_shoot"
+		else:
+			$AnimatedSprite.animation = "walk"
 		$AnimatedSprite.flip_v = false
 		$AnimatedSprite.flip_h = velocity.x < 0
 
-func _on_Player_body_entered(_body):
-	hide()
-	emit_signal("hit")
-	$CollisionShape2D.set_deferred("disabled", true)
+func _on_Player_body_entered(body):
+	if body.get_name().find("Fist") != -1: 
+		is_shooting = false
+		$AnimatedSprite.animation = "walk"
+		body.queue_free()
+	else: 	
+		hide()
+		emit_signal("hit")
+		$CollisionShape2D.set_deferred("disabled", true)
 
 func start(pos):
 	position = pos
