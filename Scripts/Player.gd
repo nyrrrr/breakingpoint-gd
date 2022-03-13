@@ -1,5 +1,5 @@
 extends Area2D
-
+signal hit
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -10,6 +10,7 @@ var screen_size
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
+	hide()
 
 
 func _process(delta):
@@ -35,3 +36,13 @@ func _process(delta):
 		$AnimatedSprite.animation = "walk"
 		$AnimatedSprite.flip_v = false
 		$AnimatedSprite.flip_h = velocity.x < 0
+
+func _on_Player_body_entered(_body):
+	hide()
+	emit_signal("hit")
+	$CollisionShape2D.set_deferred("disabled", true)
+
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
