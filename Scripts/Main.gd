@@ -8,6 +8,8 @@ func _ready():
 
 func game_over():
 	$EnemyTimer.stop()
+	if $Fist:
+		$Fist.queue_free()
 	
 func new_game():
 	$Player.start($StartPosition.position)
@@ -28,7 +30,6 @@ func _on_EnemyTimer_timeout():
 	var velocity = Vector2(rand_range(150.0, 250.0), 0.0)
 	enemy.linear_velocity = velocity.rotated(direction)
 	enemy.animated_sprite.flip_h = enemy.linear_velocity.x < 0
-
 
 func _on_StartTimer_timeout():
 	$EnemyTimer.start()

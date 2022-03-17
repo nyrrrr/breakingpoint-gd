@@ -11,7 +11,6 @@ func _ready():
 	animated_sprite = get_node("AnimatedSprite")
 	$CollisionShape2D.disabled = false
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if health <= 0:

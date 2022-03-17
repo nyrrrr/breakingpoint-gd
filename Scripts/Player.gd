@@ -2,7 +2,7 @@ extends Area2D
 
 class_name Player
 
-signal hit
+signal dead
 export var speed = 400
 var screen_size
 var damage = 2
@@ -16,7 +16,7 @@ func _ready():
 func _process(delta):
 	if health <= 0:
 		hide()
-		emit_signal("hit")
+		emit_signal("dead")
 		
 	var velocity = Vector2.ZERO # The player's movement vector.
 	if Input.is_action_pressed("move_right"):

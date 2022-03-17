@@ -46,6 +46,14 @@ func _on_Fist_body_entered(body):
 		body.health -= damage
 		is_returning = true
 		# bounce the enemy back
+		var old_lin_velocity = body.linear_velocity
+		body.linear_velocity = velocity / speed
+		body.get_node("CollisionShape2D").set_deferred("disabled", true)
+		yield(get_tree().create_timer(1.0), "timeout")
+		if is_instance_valid(body): 
+			body.get_node("CollisionShape2D").disabled = false
+			body.linear_velocity = old_lin_velocity
+		
 		
 func start(pos):
 	self.position = pos
