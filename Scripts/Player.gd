@@ -3,7 +3,6 @@ extends Area2D
 class_name Player
 
 signal hit
-
 export var speed = 400
 var screen_size
 var damage = 2
@@ -12,8 +11,7 @@ var health = 3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
-	#hide()
-
+	hide()
 
 func _process(delta):
 	if health <= 0:

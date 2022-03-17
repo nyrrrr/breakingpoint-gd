@@ -1,12 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Fist.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 16, 24, 0, 0, 0, 0, 16, 24, 0, 0, 0, 0, 1256, 24, 0, 0, 0, 0, 1256, 704, 0, 0, 0, 0, 1256, 704, 0, 0, 0, 0, 24, 696, 0, 0, 0, 0, 24, 696, 0, 0, 0, 0, 24, 696, 0, 0, 0, 0, 16, 24 )
+"points": PoolVector2Array( 0, 0, 0, 0, 16, 16, 0, 0, 0, 0, 1264, 16, 0, 0, 0, 0, 1264, 704, 0, 0, 0, 0, 16, 704, 0, 0, 0, 0, 16, 16 )
 }
 
 [node name="Main" type="Node"]
@@ -35,6 +36,9 @@ curve = SubResource( 1 )
 
 [node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemyPath"]
 position = Vector2( 16, 24 )
+
+[node name="Fist" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, 6 )
 
 [connection signal="hit" from="Player" to="." method="game_over"]
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]

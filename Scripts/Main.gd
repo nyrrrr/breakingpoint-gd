@@ -11,6 +11,7 @@ func game_over():
 	
 func new_game():
 	$Player.start($StartPosition.position)
+	$Fist.start($Player/FistReturnPosition.global_position)
 	$StartTimer.start()
 
 func _on_EnemyTimer_timeout():

@@ -7,13 +7,16 @@ var screen_size
 var starting_position: Vector2
 var velocity: Vector2
 var is_returning: bool
+var player
 
 var damage = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_parent().get_viewport().size
-	starting_position = self.position
+	player = get_parent().get_node("Player/FistReturnPosition")
+	starting_position = player.position
+	self.position = player.global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -28,10 +31,10 @@ func _process(delta):
 		velocity.y += 1
 	if is_returning or (!Input.is_action_pressed("shoot_left") && !Input.is_action_pressed("shoot_right") && !Input.is_action_pressed("shoot_up") && !Input.is_action_pressed("shoot_down")):
 		is_returning = true
-		velocity = starting_position - self.position
+		velocity = player.global_position - self.global_position
 		if velocity.length() < 5:
 			velocity = Vector2.ZERO
-			self.position = starting_position
+			self.position = player.global_position
 			is_returning = false
 	velocity = velocity.normalized() * speed
 	self.global_position += velocity * delta
@@ -43,3 +46,7 @@ func _on_Fist_body_entered(body):
 		body.health -= damage
 		is_returning = true
 		# bounce the enemy back
+		
+func start(pos):
+	self.position = pos
+	$CollisionShape2D.disabled = false
