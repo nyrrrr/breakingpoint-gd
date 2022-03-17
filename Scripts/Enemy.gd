@@ -1,22 +1,21 @@
 extends Node
 
+class_name Enemy
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var health = 2
 var animated_sprite
+var damage = 1
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimatedSprite.playing = true
 	animated_sprite = get_node("AnimatedSprite")
+	$CollisionShape2D.disabled = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-		
-
+func _process(delta):
+	if health <= 0:
+		queue_free()
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
