@@ -8,8 +8,8 @@ func _ready():
 
 func game_over():
 	$EnemyTimer.stop()
-	if $Fist:
-		$Fist.queue_free()
+	$Fist.hide()
+	$Fist/CollisionShape2D.disabled = true
 	
 func new_game():
 	$Player.start($StartPosition.position)
