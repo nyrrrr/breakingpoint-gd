@@ -3,14 +3,9 @@ extends Area2D
 class_name Player
 
 signal hit
-signal shooting
-
-export(PackedScene) var fist_scene
 
 export var speed = 400
 var screen_size
-var is_shooting = false
-var fist: Fist
 var damage = 2
 var health = 3
 
@@ -43,16 +38,9 @@ func _process(delta):
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
-	
-	if Input.is_action_pressed("shoot_right") or Input.is_action_pressed("shoot_down") or Input.is_action_pressed("shoot_left") or Input.is_action_pressed("shoot_up"):
-		if !fist: 
-			emit_signal("shooting")
 			
 	if velocity.x != 0:
-		if is_shooting:
-			$AnimatedSprite.animation = "walk_shoot"
-		else:
-			$AnimatedSprite.animation = "walk"
+		$AnimatedSprite.animation = "walk_shoot"
 		$AnimatedSprite.flip_v = false
 		$AnimatedSprite.flip_h = velocity.x < 0
 	else:
@@ -67,10 +55,3 @@ func start(pos):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
-
-
-func _on_Player_shooting():
-	is_shooting = true
-	$AnimatedSprite.animation = "walk_shoot"
-	fist = fist_scene.instance()
-	add_child(fist)

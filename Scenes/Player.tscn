@@ -72,13 +72,12 @@ extents = Vector2( 12, 18 )
 [node name="Player" type="Area2D"]
 collision_mask = 2
 script = ExtResource( 5 )
-fist_scene = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 18, 6 )
 scale = Vector2( 6, 6 )
 frames = SubResource( 7 )
-animation = "walk"
+animation = "walk_shoot"
 offset = Vector2( -3, -1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -87,5 +86,7 @@ shape = SubResource( 8 )
 [node name="FistReturnPosition" type="Position2D" parent="."]
 position = Vector2( 0, 6 )
 
+[node name="Fist" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 6 )
+
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
-[connection signal="shooting" from="." to="." method="_on_Player_shooting"]
