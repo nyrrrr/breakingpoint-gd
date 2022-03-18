@@ -3,9 +3,16 @@ extends Node
 class_name Fist
 
 export var speed = 600
+export var max_distance = 400
+export var max_total_flight_distance = 50000
+
 var screen_size
+
 var starting_position: Vector2
 var velocity: Vector2
+var distance_to_player: float
+var distance_passed: float
+
 var is_returning: bool
 var player
 
@@ -19,8 +26,11 @@ func _ready():
 	self.position = player.global_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process (delta):
 	velocity = Vector2.ZERO
+	distance_to_player = (player.global_position - self.global_position).length()
+	if distance_to_player > max_distance:
+		is_returning = true
 	if Input.is_action_pressed("shoot_left") and is_returning == false:
 		velocity.x -= 1
 	if Input.is_action_pressed("shoot_right") and is_returning == false:
@@ -36,7 +46,11 @@ func _process(delta):
 			velocity = Vector2.ZERO
 			self.position = player.global_position
 			is_returning = false
+			distance_passed = 0
 	velocity = velocity.normalized() * speed
+	distance_passed += velocity.length()
+	if distance_passed > max_total_flight_distance:
+		is_returning = true
 	self.global_position += velocity * delta
 	self.global_position.x = clamp(self.global_position.x, 0, screen_size.x)
 	self.global_position.y = clamp(self.global_position.y, 0, screen_size.y)
@@ -45,7 +59,6 @@ func _on_Fist_body_entered(body):
 	if body is Enemy:
 		body.health -= damage
 		is_returning = true
-		# bounce the enemy back
 		var old_lin_velocity = body.linear_velocity
 		body.linear_velocity = velocity / speed
 		body.get_node("CollisionShape2D").set_deferred("disabled", true)
