@@ -1,4 +1,4 @@
-extends Node
+extends RigidBody2D
 
 class_name Fist
 
@@ -33,11 +33,11 @@ func _process (delta):
 		is_returning = true
 	if Input.is_action_pressed("shoot_left") and is_returning == false:
 		velocity.x -= 1
-	if Input.is_action_pressed("shoot_right") and is_returning == false:
+	elif Input.is_action_pressed("shoot_right") and is_returning == false:
 		velocity.x += 1
 	if Input.is_action_pressed("shoot_up") and is_returning == false:
 		velocity.y -= 1
-	if Input.is_action_pressed("shoot_down") and is_returning == false:
+	elif Input.is_action_pressed("shoot_down") and is_returning == false:
 		velocity.y += 1
 	if is_returning or (!Input.is_action_pressed("shoot_left") && !Input.is_action_pressed("shoot_right") && !Input.is_action_pressed("shoot_up") && !Input.is_action_pressed("shoot_down")):
 		is_returning = true
