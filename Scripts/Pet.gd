@@ -28,6 +28,7 @@ func _ready():
 	player = get_parent().get_node("Player/PetReturnPosition")
 	starting_position = player.position
 	self.position = player.global_position
+	hide()
 
 func _physics_process (delta):
 	collision = null
@@ -62,5 +63,6 @@ func _physics_process (delta):
 	self.global_position.y = clamp(self.global_position.y, 0, screen_size.y)
 		
 func start(pos):
+	show()
 	self.position = pos
 	$CollisionShape2D.disabled = false

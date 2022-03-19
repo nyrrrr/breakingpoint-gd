@@ -18,8 +18,9 @@ func _process(delta):
 	if health <= 0:
 		hide()
 		emit_signal("dead")
+		$CollisionShape2D.set_deferred("disabled", true)
 		
-	var velocity = Vector2.ZERO # The player's movement vector.
+	var velocity = Vector2.ZERO 
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_pressed("move_left"):

@@ -5,15 +5,16 @@ var score: int
 
 func _ready():
 	randomize()
-	new_game()
 
 func game_over():
 	$EnemyTimer.stop()
 	$ScoreTimer.stop()
-	$Pet.hide()
-	$Pet/CollisionShape2D.disabled = true
+	$HUD.show_game_over()
 	
 func new_game():
+	get_tree().call_group("Enemy", "queue_free")
+	$HUD.update_score(score)
+	$HUD.show_message("Get Ready")
 	$Player.start($StartPosition.position)
 	$Pet.start($Player/PetReturnPosition.global_position)
 	$StartTimer.start()
@@ -36,6 +37,7 @@ func _on_EnemyTimer_timeout():
 
 func _on_StartTimer_timeout():
 	$EnemyTimer.start()
+	$ScoreTimer.start()
 
 func _on_BlackScreen_resized():
 	$BlackScreen.rect_size = get_parent().get_viewport_rect().size
@@ -47,7 +49,7 @@ func _on_Player_hit():
 
 func _on_ScoreTimer_timeout():
 	score += 1
+	$HUD.update_score(score)
 
 func _on_Pet_score_up():
 	score += 1
-	print("SCORE UP")
