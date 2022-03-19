@@ -10,15 +10,16 @@ func game_over():
 	$EnemyTimer.stop()
 	$ScoreTimer.stop()
 	$HUD.show_game_over()
+	$Pet.stop()
 	
 func new_game():
+	score = 0
 	get_tree().call_group("Enemy", "queue_free")
 	$HUD.update_score(score)
 	$HUD.show_message("Get Ready")
 	$Player.start($StartPosition.position)
 	$Pet.start($Player/PetReturnPosition.global_position)
 	$StartTimer.start()
-	score = 0
 
 func _on_EnemyTimer_timeout():
 	var spawn_location = get_node("EnemyPath/EnemySpawnLocation")

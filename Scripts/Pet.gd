@@ -66,3 +66,7 @@ func start(pos):
 	show()
 	self.position = pos
 	$CollisionShape2D.disabled = false
+	
+func stop():
+	hide()
+	$CollisionShape2D.disabled = true

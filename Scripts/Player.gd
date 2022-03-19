@@ -54,5 +54,6 @@ func _on_Player_body_entered(body):
 
 func start(pos):
 	position = pos
+	health = 3
 	show()
 	$CollisionShape2D.disabled = false
