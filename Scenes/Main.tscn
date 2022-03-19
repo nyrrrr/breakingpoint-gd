@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/Fist.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Pet.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -37,7 +37,7 @@ curve = SubResource( 1 )
 [node name="EnemySpawnLocation" type="PathFollow2D" parent="EnemyPath"]
 position = Vector2( 16, 16 )
 
-[node name="Fist" parent="." instance=ExtResource( 4 )]
+[node name="Pet" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, 6 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
@@ -45,8 +45,8 @@ anchor_right = 0.862
 anchor_bottom = 1.0
 margin_right = 176.0
 margin_bottom = 72.0
-text = "WASD: movement
-Arrow Keys: shooting"
+text = "WASD: move Player
+Arrow Keys: move Pet"
 
 [connection signal="dead" from="Player" to="." method="game_over"]
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]

@@ -14,10 +14,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Enemy.gd"
 }, {
-"base": "RigidBody2D",
-"class": "Fist",
+"base": "KinematicBody2D",
+"class": "Pet",
 "language": "GDScript",
-"path": "res://Scripts/Fist.gd"
+"path": "res://Scripts/Pet.gd"
 }, {
 "base": "Area2D",
 "class": "Player",
@@ -26,7 +26,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Enemy": "",
-"Fist": "",
+"Pet": "",
 "Player": ""
 }
 
@@ -93,6 +93,7 @@ shoot_right={
 [physics]
 
 common/enable_pause_aware_picking=true
+2d/default_gravity_vector=Vector2( 0, 0 )
 
 [rendering]
 

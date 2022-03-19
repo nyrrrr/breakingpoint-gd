@@ -1,10 +1,12 @@
-extends RigidBody2D
+extends KinematicBody2D
 
-class_name Fist
+class_name Pet
 
-export var speed = 600
-export var max_distance = 400
-export var max_total_flight_distance = 50000
+export var speed: int = 600
+export var acceleration: int = 18500
+export var return_acceleration: int = 10000
+export var max_distance: int = 500
+export var max_total_flight_distance: int = 60000
 
 var screen_size
 
@@ -16,16 +18,14 @@ var distance_passed: float
 var is_returning: bool
 var player
 
-var damage = 1
+var damage: int = 1
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_parent().get_viewport().size
-	player = get_parent().get_node("Player/FistReturnPosition")
+	player = get_parent().get_node("Player/PetReturnPosition")
 	starting_position = player.position
 	self.position = player.global_position
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process (delta):
 	velocity = Vector2.ZERO
 	distance_to_player = (player.global_position - self.global_position).length()
@@ -47,20 +47,24 @@ func _process (delta):
 			self.position = player.global_position
 			is_returning = false
 			distance_passed = 0
-	velocity = velocity.normalized() * speed
+	velocity = velocity.move_toward(velocity.normalized() * speed, (return_acceleration if is_returning else acceleration) * delta)
+	$AnimatedSprite.flip_v = false
+	$AnimatedSprite.flip_h = velocity.x > 0
 	distance_passed += velocity.length()
 	if distance_passed > max_total_flight_distance:
 		is_returning = true
-	self.global_position += velocity * delta
-	self.global_position.x = clamp(self.global_position.x, 0, screen_size.x)
-	self.global_position.y = clamp(self.global_position.y, 0, screen_size.y)
+#	self.global_position += velocity * delta
+#	self.global_position.x = clamp(self.global_position.x, 0, screen_size.x)
+#	self.global_position.y = clamp(self.global_position.y, 0, screen_size.y)
+	velocity = move_and_slide(velocity)
+	#move_and_collide(velocity * delta)
 
 func _on_Fist_body_entered(body):
 	if body is Enemy:
 		body.health -= damage
 		is_returning = true
 		var old_lin_velocity = body.linear_velocity
-		body.linear_velocity = velocity / speed
+		body.linear_velocity = velocity / 100000
 		body.get_node("CollisionShape2D").set_deferred("disabled", true)
 		yield(get_tree().create_timer(1.0), "timeout")
 		if is_instance_valid(body): 

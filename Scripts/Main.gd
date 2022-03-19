@@ -8,12 +8,12 @@ func _ready():
 
 func game_over():
 	$EnemyTimer.stop()
-	$Fist.hide()
-	$Fist/CollisionShape2D.disabled = true
+	$Pet.hide()
+	$Pet/CollisionShape2D.disabled = true
 	
 func new_game():
 	$Player.start($StartPosition.position)
-	$Fist.start($Player/FistReturnPosition.global_position)
+	$Pet.start($Player/PetReturnPosition.global_position)
 	$StartTimer.start()
 
 func _on_EnemyTimer_timeout():
