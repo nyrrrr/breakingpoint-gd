@@ -3,10 +3,11 @@ extends Area2D
 class_name Player
 
 signal dead
-export var speed = 400
-var screen_size
-var damage = 2
-var health = 3
+signal hit
+export var speed: int = 400
+var screen_size: Vector2
+var damage: int = 2
+var health: int = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,6 +47,7 @@ func _process(delta):
 
 func _on_Player_body_entered(body):
 	if body is Enemy:
+		emit_signal("hit")
 		health -= body.damage
 		body.health -= damage
 

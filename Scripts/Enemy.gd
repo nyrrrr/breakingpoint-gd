@@ -2,9 +2,9 @@ extends Node
 
 class_name Enemy
 
-var health = 2
-var animated_sprite
-var damage = 1
+var health: int = 2
+var animated_sprite: AnimatedSprite
+var damage: int = 1
 
 func _ready():
 	$AnimatedSprite.playing = true
@@ -19,6 +19,13 @@ func _process(_delta):
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
-
 func _on_Enemy_body_entered(body):
 	damage = 0
+	if body is Pet:
+		health -= body.damage
+		body.is_returning = true
+		emit_signal("score_up")
+		$CollisionShape2D.set_deferred("disabled", true)
+		yield(get_tree().create_timer(0.1), "timeout")
+		if is_instance_valid(self): 
+			$CollisionShape2D.disabled = false
