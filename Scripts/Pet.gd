@@ -10,7 +10,7 @@ export var return_acceleration: int = 10000
 export var max_distance: int = 500
 export var max_total_flight_distance: int = 60000
 
-var screen_size
+var screen_size: Vector2
 
 var starting_position: Vector2
 var velocity: Vector2
@@ -19,7 +19,7 @@ var distance_passed: float
 var collision: KinematicCollision2D = null
 
 var is_returning: bool
-var player
+var player: Position2D
 
 var damage: int = 1
 
@@ -44,7 +44,7 @@ func _physics_process (delta):
 	elif Input.is_action_pressed("shoot_down") and is_returning == false:
 		velocity.y += 1
 	if is_returning or (!Input.is_action_pressed("shoot_left") && !Input.is_action_pressed("shoot_right") && !Input.is_action_pressed("shoot_up") && !Input.is_action_pressed("shoot_down")):
-		is_returning = true
+#		is_returning = true
 		velocity = player.global_position - self.global_position
 		if velocity.length() < 5:
 			velocity = Vector2.ZERO
@@ -57,27 +57,9 @@ func _physics_process (delta):
 	distance_passed += velocity.length()
 	if distance_passed > max_total_flight_distance:
 		is_returning = true
-#	self.global_position += velocity * delta
-#	velocity = move_and_slide(velocity)
 	collision = move_and_collide(velocity * delta)
-	if collision:
-		print("I collided with ", collision.collider.name)
 	self.global_position.x = clamp(self.global_position.x, 0, screen_size.x)
 	self.global_position.y = clamp(self.global_position.y, 0, screen_size.y)
-
-#func _on_Fist_body_entered(body):
-#	if body is Enemy:
-#		body.health -= damage
-#		is_returning = true
-#		emit_signal("score_up")
-#		print("emit")
-#		var old_lin_velocity = body.linear_velocity
-#		body.linear_velocity = velocity / 100000
-#		body.get_node("CollisionShape2D").set_deferred("disabled", true)
-#		yield(get_tree().create_timer(1.0), "timeout")
-#		if is_instance_valid(body): 
-#			body.get_node("CollisionShape2D").disabled = false
-#			body.linear_velocity = old_lin_velocity
 		
 func start(pos):
 	self.position = pos
