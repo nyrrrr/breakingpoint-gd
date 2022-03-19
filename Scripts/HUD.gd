@@ -19,5 +19,6 @@ func _on_MessageTimer_timeout():
 	$Message.hide()
 
 func _on_StartButton_pressed():
+	$SelectAudio.play()
 	$StartButton.hide()
 	emit_signal("start_game")

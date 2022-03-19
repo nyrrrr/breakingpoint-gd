@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Assets/sprites/Enemy-0001.png" type="Texture" id=2]
+[ext_resource path="res://Assets/sfx/petHit.wav" type="AudioStream" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -36,6 +37,7 @@ script = ExtResource( 1 )
 scale = Vector2( 6, 6 )
 frames = SubResource( 3 )
 animation = "walk"
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -45,6 +47,9 @@ shape = SubResource( 4 )
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." groups=["Enemy"]]
 position = Vector2( 0, 12 )
 scale = Vector2( 1.2, 1.2 )
+
+[node name="HitAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
 
 [connection signal="body_entered" from="." to="." method="_on_Enemy_body_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

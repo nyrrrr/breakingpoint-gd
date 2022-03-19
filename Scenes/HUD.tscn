@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/font/Early GameBoy.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=2]
+[ext_resource path="res://Assets/sfx/blipSelect.wav" type="AudioStream" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -56,6 +57,10 @@ flat = true
 [node name="MessageTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="SelectAudio" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 640, 0 )
+stream = ExtResource( 3 )
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]

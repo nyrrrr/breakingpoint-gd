@@ -7,10 +7,10 @@ func _ready():
 	randomize()
 
 func game_over():
+	$GameOverAudio.play()
 	$EnemyTimer.stop()
 	$ScoreTimer.stop()
 	$HUD.show_game_over()
-	$Pet.stop()
 	
 func new_game():
 	score = 0
@@ -47,6 +47,7 @@ func _on_Player_hit():
 	$BlackScreen.visible = true
 	yield(get_tree().create_timer(0.05), "timeout")
 	$BlackScreen.visible = false
+	$PlayerHitAudio.play()
 
 func _on_ScoreTimer_timeout():
 	score += 1

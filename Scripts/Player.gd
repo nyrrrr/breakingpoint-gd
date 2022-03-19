@@ -8,6 +8,7 @@ export var speed: int = 400
 var screen_size: Vector2
 var damage: int = 2
 var health: int = 3
+var once: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,7 +18,9 @@ func _ready():
 func _process(delta):
 	if health <= 0:
 		hide()
-		emit_signal("dead")
+		if once:
+			emit_signal("dead")
+			once = false
 		$CollisionShape2D.set_deferred("disabled", true)
 		
 	var velocity = Vector2.ZERO 
@@ -53,6 +56,7 @@ func _on_Player_body_entered(body):
 		body.health -= damage
 
 func start(pos):
+	once = true
 	position = pos
 	health = 3
 	show()

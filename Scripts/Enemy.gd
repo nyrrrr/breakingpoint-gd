@@ -20,6 +20,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
 func _on_Enemy_body_entered(body):
+	$HitAudio.play()
 	damage = 0
 	if body is Pet:
 		health -= body.damage
