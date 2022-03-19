@@ -53,6 +53,11 @@ func _physics_process (delta):
 			is_returning = false
 			distance_passed = 0
 	velocity = velocity.move_toward(velocity.normalized() * speed, (return_acceleration if is_returning else acceleration) * delta)
+	if velocity.length() != 0:
+		$AnimatedSprite.play()
+	else:
+		$AnimatedSprite.stop()
+		$AnimatedSprite.frame = 0
 	$AnimatedSprite.flip_v = false
 	$AnimatedSprite.flip_h = velocity.x > 0
 	distance_passed += velocity.length()
