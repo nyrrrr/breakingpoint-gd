@@ -10,6 +10,7 @@ func game_over():
 	$GameOverAudio.play()
 	$EnemyTimer.stop()
 	$ScoreTimer.stop()
+	$Pet.stop()
 	$HUD.show_game_over()
 	
 func new_game():
